@@ -1,18 +1,19 @@
 <template>
-  <div>哈哈</div>
+  <div>
+    <a-button type="primary">Primary Button</a-button>
+    <a-timeline>
+      <a-timeline-item>Create a services site 2015-09-01</a-timeline-item>
+      <a-timeline-item>Solve initial network problems 2015-09-01</a-timeline-item>
+      <a-timeline-item>Technical testing 2015-09-01</a-timeline-item>
+      <a-timeline-item>Network problems being solved 2015-09-01</a-timeline-item>
+    </a-timeline>
+  </div>
 </template>
 
 <script setup lang="ts">
-import request from '@/service/index'
 import { onMounted } from 'vue'
 
-onMounted(() => {
-  const d = request({
-    url: '/api/v1',
-    method: 'post'
-  })
-  console.log(d)
-})
+onMounted(async () => {})
 </script>
 
 <style scoped></style>
