@@ -6,12 +6,12 @@ export type RemoveEventFn = () => void
 export interface useEventParams {
   el?: Element | Ref<Element | undefined> | Window | any
   name: string
-  listener: EventListener
+  listenerHandler: EventListener
   options: boolean | AddEventListenerOptions
   autoRemove?: boolean
 }
 
-export function useEventListener({ el = window, name, listener, options, autoRemove = true }: useEventParams): {
+export function useEventListener({ el = window, name, listenerHandler, options, autoRemove = true }: useEventParams): {
   removeEvent: RemoveEventFn
 } {
   let remove: RemoveEventFn = () => {}
@@ -19,10 +19,10 @@ export function useEventListener({ el = window, name, listener, options, autoRem
   if (el) {
     const element = ref(el as Element) as Ref<Element>
     const removeEventListener = (e: Element) => {
-      e.removeEventListener(name, listener, options)
+      e.removeEventListener(name, listenerHandler, options)
     }
     const addEventListener = (e: Element) => {
-      e.addEventListener(name, listener, options)
+      e.addEventListener(name, listenerHandler, options)
     }
     const removeWatch = watch(
       element,
