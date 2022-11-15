@@ -6,17 +6,14 @@ const createApi = (config: increateApiConfig) => {
   const instance: AxiosInstance = axios.create(config)
   instance.interceptors.request.use(
     (req: increateApiConfig) => {
-      const { data = {}, setHeader = () => {} } = req
+      const { data = {} } = req
       if (typeof data !== 'string') {
         req.data = qs.stringify(data)
       }
-      const headerObj: inheader = setHeader()
-
-      for (const key in headerObj) {
-        const value = headerObj[key]
-        req?.headers[key] = value
+      if (req?.setHeader) {
+        const headerObj: inheader = req.setHeader()
+        console.log(headerObj)
       }
-
       return req
     },
     (err: any) => {
