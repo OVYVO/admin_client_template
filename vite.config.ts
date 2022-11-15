@@ -20,11 +20,6 @@ export default defineConfig({
       '/api': {
         target: 'http://172.168.70.195:9789', //测试
         changeOrigin: true
-      },
-      '/api/v1': {
-        target: 'http://172.168.70.195', //ceshi
-        ws: true,
-        changeOrigin: true
       }
     }
   },

@@ -1,0 +1,9 @@
+*.sh
+*.md
+*.woff
+*.ttf
+.vscode
+.husky
+.github
+
+
