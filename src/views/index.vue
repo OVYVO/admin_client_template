@@ -1,13 +1,34 @@
 <template>
   <div>
-    <a-button type="primary">Primary Button</a-button>
+    <div class="red" ref="redDom" v-if="visible"></div>
+    <a-button type="primary" @click="visible = !visible">Primary Button</a-button>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
+import { useEventListener } from '@/hooks/useEventListener'
 
-onMounted(async () => {})
+const redDom = ref(null)
+const visible = ref(true)
+onMounted(() => {
+  const a = useEventListener({
+    el: redDom,
+    name: 'click',
+    listenerHandler: () => {
+      console.log(1)
+    },
+    options: false,
+    autoRemove: false
+  })
+  // a.removeEvent()
+})
 </script>
 
-<style scoped></style>
+<style scoped>
+.red {
+  width: 100px;
+  height: 100px;
+  background: red;
+}
+</style>

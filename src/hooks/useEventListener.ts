@@ -18,13 +18,13 @@ export function useEventListener({ el = window, name, listenerHandler, options, 
   const isAddRef = ref(false)
   if (el) {
     const element = ref(el as Element) as Ref<Element>
-    const removeEventListener = (e: Element) => {
-      e.removeEventListener(name, listenerHandler, options)
-    }
     const addEventListener = (e: Element) => {
       e.addEventListener(name, listenerHandler, options)
     }
-    const removeWatch = watch(
+    const removeEventListener = (e: Element) => {
+      e.removeEventListener(name, listenerHandler, options)
+    }
+    watch(
       element,
       (v, _ov, cleanUp) => {
         if (v) {
@@ -40,7 +40,6 @@ export function useEventListener({ el = window, name, listenerHandler, options, 
     )
     remove = () => {
       removeEventListener(element.value)
-      removeWatch()
     }
   }
   return { removeEvent: remove }
