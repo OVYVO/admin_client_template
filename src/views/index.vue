@@ -19,7 +19,10 @@ onMounted(() => {
       console.log(1)
     },
     options: false,
-    autoRemove: false
+    autoRemove: false,
+    needExtrahandle: true,
+    isDebounce: false,
+    wait: 200
   })
   // a.removeEvent()
 })

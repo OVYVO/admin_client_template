@@ -1,12 +1,11 @@
-import { ref, Ref, watch, WatchStopHandle, ComputedRef } from 'vue'
+import { Ref, WatchStopHandle, ComputedRef } from 'vue'
+import { ref, watch } from 'vue'
 
 /**
- * 防抖函数
+ * 防抖函数(多次触发只执行最后一次)
  * @param fn 回调函数
- * @param wait 延时ms
- */
-
-/**
+ * @param wait 延时ms 默认1s
+ * @example
  * case: 普通使用
  *  const setSate = (d)=>{console.log(d)}
  *  const {run, cancel} = useDebounceFn(setSate,2000)
@@ -29,22 +28,17 @@ export function useDebounceFn<T extends (...args: any) => any>(fn: T, wait = 100
     cancel()
     timer.value = setTimeout(() => fn.apply(fn, args), wait)
   }
-  return {
-    run,
-    cancel
-  }
+  return { run, cancel }
 }
 
 /**
  * 防抖修改目标值
  * @param watchFn  被监听函数/取值函数
- * @param wait 延时ms
- */
-
-/**
+ * @param wait 延时ms 默认1s
+ * @example
  * case: 普通使用
  *  const watchVal = ref(0)
- *  const { state, watchStop, cancel } = useDebounce(watchVal)
+ *  const { state, watchStop, cancel } = useDebounceDate(watchVal)
  *  watchval.value = 1
  *  watchval.value = 2
  *  watchval.value = 3
@@ -59,13 +53,13 @@ export function useDebounceFn<T extends (...args: any) => any>(fn: T, wait = 100
  *  delay 1s => console.log(watchval) //3
  */
 
-export interface useDebounceApi<T> {
+export interface useDebounceStateApi<T> {
   state: Ref<T>
   watchStop: WatchStopHandle
   cancel: () => void
 }
 
-export function useDebounce<T>(watchFn: () => T | Ref<T> | ComputedRef<T>, wait = 1000): useDebounceApi<T> {
+export function useDebounceDate<T>(watchFn: (() => T) | Ref<T> | ComputedRef<T>, wait = 1000): useDebounceStateApi<T> {
   const state = typeof watchFn === 'function' ? (ref(watchFn()) as Ref<T>) : (ref(watchFn['value']) as Ref<T>)
   const { run: setState, cancel } = useDebounceFn((d: T) => (state.value = d), wait - 10)
   const watchStop = watch(watchFn, newVal => {
