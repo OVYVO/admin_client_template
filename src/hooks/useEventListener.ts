@@ -24,7 +24,7 @@ export function useEventListener({ el = window, name, listenerHandler, options, 
     const removeEventListener = (e: Element) => {
       e.removeEventListener(name, listenerHandler, options)
     }
-    watch(
+    const removeWatch = watch(
       element,
       (v, _ov, cleanUp) => {
         if (v) {
@@ -40,6 +40,8 @@ export function useEventListener({ el = window, name, listenerHandler, options, 
     )
     remove = () => {
       removeEventListener(element.value)
+      // 取消watch监听
+      removeWatch()
     }
   }
   return { removeEvent: remove }
