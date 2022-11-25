@@ -2,6 +2,8 @@ import axios from 'axios'
 import qs from 'qs'
 import type { AxiosInstance, AxiosResponse } from 'axios'
 import { increateApiConfig, inheader } from './types'
+import { showLoading, hiddenLoading } from '@/components/MyLoading'
+
 export const createApi = (config: increateApiConfig) => {
   const instance: AxiosInstance = axios.create(config)
   instance.interceptors.request.use(
@@ -37,17 +39,18 @@ export const createApi = (config: increateApiConfig) => {
   )
   return async (options: increateApiConfig, { shouldLoading = false } = {}) => {
     if (shouldLoading) {
-      console.log('loading')
+      showLoading()
     }
     try {
       const response = await instance(options)
+      hiddenLoading()
       const { data } = response
       return data
     } catch (e: any) {
       const { msg = '' } = e.data
       const errorMessage = `${options.url}接口报错:${msg}`
       if (shouldLoading) {
-        console.log('关闭loading')
+        hiddenLoading()
       }
       console.log(errorMessage)
       return Promise.reject(errorMessage)
