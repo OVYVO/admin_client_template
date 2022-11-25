@@ -2,12 +2,14 @@ import { App } from 'vue'
 import copy from './copy'
 import clickoutside from './clickoutside'
 import draggable from './draggable'
+import lazyimg from './lazyimg'
 
 const directivesList: any = {
   // Custom directives
   copy,
   clickoutside,
-  draggable
+  draggable,
+  lazyimg
 }
 
 const directives = {
