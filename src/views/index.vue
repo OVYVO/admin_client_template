@@ -20,11 +20,10 @@ onMounted(() => {
     },
     options: false,
     autoRemove: false,
-    needExtrahandle: true,
-    isDebounce: false,
+    needExtrahandler: true,
+    extrahandlerType: 'debounce',
     wait: 200
   })
-  // a.removeEvent()
 })
 </script>
 

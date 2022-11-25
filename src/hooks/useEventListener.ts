@@ -8,14 +8,16 @@ import { useThrottleFn } from './useThrottle'
  * @param el Dom元素默认window
  * @param name 事件名称
  * @param listenerHandler 事件监听处理
- * @param options 参数
+ * @param options 参数needExtrahandler
  * @param autoRemove 是否自动移除监听
- * @param needExtrahandle 是否需要额外处理监听处理事件
- * @param isDebounce 是否防抖
+ * @param needExtrahandler 是否需要额外处理监听处理事件
+ * @param extrahandlerType 额外处理类型(debounce | throttle)
  * @param wait 时间
  */
 
 export type RemoveEventFn = () => void
+
+export type ExtrahandlerType = 'debounce' | 'throttle'
 
 export interface useEventParams {
   el?: Element | Ref<Element | undefined> | Window | any
@@ -23,8 +25,8 @@ export interface useEventParams {
   listenerHandler: EventListener
   options: boolean | AddEventListenerOptions
   autoRemove?: boolean
-  needExtrahandle?: boolean
-  isDebounce?: boolean
+  needExtrahandler?: boolean
+  extrahandlerType?: ExtrahandlerType
   wait?: number
 }
 
@@ -34,8 +36,8 @@ export function useEventListener({
   listenerHandler,
   options,
   autoRemove = true,
-  needExtrahandle = true,
-  isDebounce = true,
+  needExtrahandler = true,
+  extrahandlerType,
   wait = 500
 }: useEventParams): {
   removeEvent: RemoveEventFn
@@ -45,8 +47,10 @@ export function useEventListener({
   if (el) {
     const element = ref(el as Element) as Ref<Element>
     const { run } =
-      needExtrahandle && isDebounce ? useDebounceFn(listenerHandler, wait) : useThrottleFn(listenerHandler, wait)
-    const handler = needExtrahandle ? run : listenerHandler
+      needExtrahandler && extrahandlerType == 'debounce'
+        ? useDebounceFn(listenerHandler, wait)
+        : useThrottleFn(listenerHandler, wait)
+    const handler = needExtrahandler ? run : listenerHandler
     // 添加监听
     const addEventListener = (e: Element) => {
       e.addEventListener(name, handler, options)
