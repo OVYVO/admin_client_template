@@ -8,19 +8,22 @@
         v-model:selectedKeys="selectedKeys"
         @menuItemClick="menuItemClick"></side-bar>
       <a-layout>
-        <a-layout-header style="background: #fff; padding: 0">
-          <menu-unfold-outlined v-if="collapsed" class="trigger" @click="() => (collapsed = !collapsed)" />
-          <menu-fold-outlined v-else class="trigger" @click="() => (collapsed = !collapsed)" />
+        <a-layout-header>
+          <!--展开折叠按钮-->
+          <a-icon
+            :type="collapsed ? 'MenuUnfoldOutlined' : 'MenuFoldOutlined'"
+            class="trigger"
+            @click="() => (collapsed = !collapsed)">
+          </a-icon>
         </a-layout-header>
-        <a-layout-content :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '280px' }">
-          Content
+        <a-layout-content>
+          <slot></slot>
         </a-layout-content>
       </a-layout>
     </a-layout>
   </div>
 </template>
 <script lang="ts" setup>
-import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons-vue'
 import { ref, reactive } from 'vue'
 import SideBar from './sideBar.vue'
 
@@ -35,7 +38,7 @@ const menuList = reactive<MenuItem[]>([
   {
     title: 'Option',
     key: 'option',
-    icon: '<SettingOutlined />',
+    icon: 'PieChartOutlined',
     children: [
       {
         title: 'option1',
@@ -69,7 +72,8 @@ const menuList = reactive<MenuItem[]>([
   },
   {
     title: 'Team',
-    key: 'team'
+    key: 'team',
+    icon: 'AppleOutlined'
   }
 ])
 
@@ -79,7 +83,7 @@ const selectedKeys = ref<string[]>(['option'])
 
 const title = ref<string>('')
 
-const collapsed = ref<boolean>(true)
+const collapsed = ref<boolean>(false)
 
 const menuItemClick = (item: MenuItem) => {
   title.value = item.title
@@ -93,12 +97,17 @@ const menuItemClick = (item: MenuItem) => {
   &:deep(.ant-layout) {
     width: 100%;
     height: 100%;
-    .logo {
+    .ant-layout-header {
+      padding: 0 20px;
+      background: #fff;
+      .anticon {
+        font-size: 20px;
+      }
+    }
+    .ant-layout-content {
       box-sizing: border-box;
       padding: 10px;
-      width: 100%;
-      height: 80px;
-      background: red;
+      background: #fff;
       background-clip: content-box;
     }
   }

@@ -1,6 +1,6 @@
 <template>
   <a-sub-menu :key="menuInfo.key">
-    <template #icon><SettingOutlined /></template>
+    <template #icon><a-icon :type="menuInfo.icon"></a-icon></template>
     <template #title>{{ menuInfo.title }}</template>
     <template v-for="item in menuInfo.children" :key="item.key">
       <template v-if="!item.children">

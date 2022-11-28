@@ -1,5 +1,6 @@
 <template>
-  <a-layout-sider :collapsed="collapsed" collapsible>
+  <a-layout-sider :collapsed="collapsed">
+    <div class="logo"></div>
     <a-menu
       :selectedKeys="selectedKeys"
       @update:selectedKeys="updateSelectedKeys"
@@ -11,7 +12,7 @@
         <template v-if="!item.children">
           <a-menu-item :key="item.key" @click="menuItemClick(item)">
             <template #icon>
-              <a-icon type="PieChartOutlined"></a-icon>
+              <a-icon :type="item.icon"></a-icon>
             </template>
             {{ item.title }}
           </a-menu-item>
@@ -26,7 +27,6 @@
 
 <script setup lang="ts">
 import SubMenu from './subMenu.vue'
-import { SettingOutlined } from '@ant-design/icons-vue'
 
 interface MenuItem {
   key: string
@@ -35,7 +35,6 @@ interface MenuItem {
   icon?: string
   children?: MenuItem[]
 }
-
 interface Props {
   menuList: Array<MenuItem>
   selectedKeys: string[]
@@ -62,4 +61,12 @@ const menuItemClick = (item: MenuItem) => {
 }
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.ant-layout-sider {
+  .logo {
+    height: 32px;
+    background: rgba(255, 255, 255, 0.3);
+    margin: 16px;
+  }
+}
+</style>
