@@ -1,7 +1,8 @@
 <template>
   <a-sub-menu :key="menuInfo.path">
+    <div>{{ menuInfo }}</div>
     <template #icon><a-icon v-if="menuInfo.meta?.icon" :type="menuInfo.meta?.icon"></a-icon></template>
-    <template #name>{{ menuInfo.name }}</template>
+    <template #title>{{ menuInfo.name }}</template>
     <template v-for="item in menuInfo.children" :key="item.key">
       <template v-if="!item.children">
         <a-menu-item :key="item.path" @click="menuItemClick(item)">
@@ -16,9 +17,9 @@
 </template>
 
 <script setup lang="ts" name="SubMenu">
-import { RouteRecordNormalized } from 'vue-router'
+import { RouteRecordRaw } from 'vue-router'
 
-defineProps<{ menuInfo: RouteRecordNormalized }>()
+defineProps<{ menuInfo: RouteRecordRaw }>()
 
 const emit = defineEmits(['menuItemClick'])
 

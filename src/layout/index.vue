@@ -23,14 +23,16 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
-import { RouteRecordNormalized } from 'vue-router'
+import type { RouteRecordRaw } from 'vue-router'
 import SideBar from './sideBar.vue'
 
 const router = useRouter()
 
-const routerList: RouteRecordNormalized[] = router.getRoutes()
+const routerList: any = computed<RouteRecordRaw[]>(() => {
+  return router.options.routes as RouteRecordRaw[]
+})
 console.log(routerList)
 
 const openKeys = ref<string[]>(['option', 'user'])
@@ -41,7 +43,7 @@ const title = ref<string | symbol>('')
 
 const collapsed = ref<boolean>(false)
 
-const menuItemClick = (item: RouteRecordNormalized) => {
+const menuItemClick = (item: RouteRecordRaw) => {
   title.value = item.name ? item.name : ''
 }
 </script>

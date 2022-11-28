@@ -18,7 +18,7 @@ Object.keys(routerContext).forEach((item: any) => {
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
+  routes //readOnly
 })
 
 router.beforeEach((to, from, next) => {
