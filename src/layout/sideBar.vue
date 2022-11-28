@@ -9,16 +9,17 @@
       :openKeys="openKeys"
       @update:openKeys="updateOpenKeys">
       <template v-for="item in menuList" :key="item.key">
-        <template v-if="!item.children">
-          <a-menu-item :key="item.key" @click="menuItemClick(item)">
+        <template v-if="!item.children.length">
+          <a-menu-item :key="item.path" @click="menuItemClick(item)">
+            1
             <template #icon>
-              <a-icon :type="item.icon"></a-icon>
+              <a-icon :type="item.meta?.icon"></a-icon>
             </template>
-            {{ item.title }}
+            {{ item.name }}
           </a-menu-item>
         </template>
         <template v-else>
-          <sub-menu :key="item.key" :menu-info="item" @menuItemClick="menuItemClick"></sub-menu>
+          <sub-menu :key="item.path" :menu-info="item" @menuItemClick="menuItemClick"></sub-menu>
         </template>
       </template>
     </a-menu>
@@ -27,16 +28,10 @@
 
 <script setup lang="ts">
 import SubMenu from './subMenu.vue'
+import { RouteRecordNormalized } from 'vue-router'
 
-interface MenuItem {
-  key: string
-  title: string
-  path?: string
-  icon?: string
-  children?: MenuItem[]
-}
 interface Props {
-  menuList: Array<MenuItem>
+  menuList: Array<RouteRecordNormalized>
   selectedKeys: string[]
   openKeys: string[]
   collapsed?: boolean
@@ -56,7 +51,7 @@ const updateOpenKeys = (...res: string[][]) => {
   emit('update:openKeys', ...res)
 }
 
-const menuItemClick = (item: MenuItem) => {
+const menuItemClick = (item: RouteRecordNormalized) => {
   emit('menuItemClick', item)
 }
 </script>

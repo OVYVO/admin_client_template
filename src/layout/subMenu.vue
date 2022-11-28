@@ -1,36 +1,28 @@
 <template>
-  <a-sub-menu :key="menuInfo.key">
-    <template #icon><a-icon :type="menuInfo.icon"></a-icon></template>
-    <template #title>{{ menuInfo.title }}</template>
+  <a-sub-menu :key="menuInfo.path">
+    <template #icon><a-icon v-if="menuInfo.meta?.icon" :type="menuInfo.meta?.icon"></a-icon></template>
+    <template #name>{{ menuInfo.name }}</template>
     <template v-for="item in menuInfo.children" :key="item.key">
       <template v-if="!item.children">
-        <a-menu-item :key="item.key" @click="menuItemClick(item)">
-          {{ item.title }}
+        <a-menu-item :key="item.path" @click="menuItemClick(item)">
+          {{ item.name }}
         </a-menu-item>
       </template>
       <template v-else>
-        <sub-menu :key="item.key" :menu-info="item" @menuItemClick="menuItemClick(item)"></sub-menu>
+        <sub-menu :key="item.path" :menu-info="item" @menuItemClick="menuItemClick(item)"></sub-menu>
       </template>
     </template>
   </a-sub-menu>
 </template>
 
 <script setup lang="ts" name="SubMenu">
-interface MenuInfo {
-  key: string
-  title: string
-  path?: string
-  icon?: string
-  children?: MenuInfo[]
-}
+import { RouteRecordNormalized } from 'vue-router'
 
-defineProps<{
-  menuInfo: MenuInfo
-}>()
+defineProps<{ menuInfo: RouteRecordNormalized }>()
 
 const emit = defineEmits(['menuItemClick'])
 
-const menuItemClick = (item: MenuInfo) => {
+const menuItemClick = (item: any) => {
   emit('menuItemClick', item)
 }
 </script>

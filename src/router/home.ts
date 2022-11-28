@@ -1,6 +1,10 @@
 export default [
   {
     path: '/',
-    component: () => import('@/views/index.vue')
+    name: '首页',
+    component: () => import('@/views/index.vue'),
+    meta: {
+      icon: 'AppleOutlined'
+    }
   }
 ]

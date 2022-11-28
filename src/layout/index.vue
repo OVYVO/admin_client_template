@@ -2,14 +2,13 @@
   <div class="layout-container">
     <a-layout>
       <side-bar
-        :menuList="menuList"
+        :menuList="routerList"
         :collapsed="collapsed"
         v-model:openKeys="openKeys"
         v-model:selectedKeys="selectedKeys"
         @menuItemClick="menuItemClick"></side-bar>
       <a-layout>
         <a-layout-header>
-          <!--展开折叠按钮-->
           <a-icon
             :type="collapsed ? 'MenuUnfoldOutlined' : 'MenuFoldOutlined'"
             class="trigger"
@@ -24,69 +23,26 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, reactive } from 'vue'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { RouteRecordNormalized } from 'vue-router'
 import SideBar from './sideBar.vue'
 
-interface MenuItem {
-  key: string
-  title: string
-  children?: MenuItem[]
-  [x: string]: any
-}
+const router = useRouter()
 
-const menuList = reactive<MenuItem[]>([
-  {
-    title: 'Option',
-    key: 'option',
-    icon: 'PieChartOutlined',
-    children: [
-      {
-        title: 'option1',
-        key: 'o1'
-      },
-      {
-        title: 'option2',
-        key: 'o2'
-      }
-    ]
-  },
-  {
-    title: 'User',
-    key: 'user',
-    children: [
-      {
-        title: 'user1',
-        key: 'user1'
-      },
-      {
-        title: 'user2',
-        key: 'user1',
-        children: [
-          {
-            title: 'user3',
-            key: 'user3'
-          }
-        ]
-      }
-    ]
-  },
-  {
-    title: 'Team',
-    key: 'team',
-    icon: 'AppleOutlined'
-  }
-])
+const routerList: RouteRecordNormalized[] = router.getRoutes()
+console.log(routerList)
 
 const openKeys = ref<string[]>(['option', 'user'])
 
 const selectedKeys = ref<string[]>(['option'])
 
-const title = ref<string>('')
+const title = ref<string | symbol>('')
 
 const collapsed = ref<boolean>(false)
 
-const menuItemClick = (item: MenuItem) => {
-  title.value = item.title
+const menuItemClick = (item: RouteRecordNormalized) => {
+  title.value = item.name ? item.name : ''
 }
 </script>
 

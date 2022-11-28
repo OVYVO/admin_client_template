@@ -1,4 +1,11 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import 'vue-router'
+
+declare module 'vue-router' {
+  interface RouteMeta {
+    icon?: string
+  }
+}
 
 const routes: RouteRecordRaw[] = []
 
