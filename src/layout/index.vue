@@ -25,17 +25,17 @@
 </template>
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
+import { ComputedRef } from 'vue'
 import { useRouter } from 'vue-router'
-import type { RouteRecordRaw } from 'vue-router'
+import type { AppRouteRecordRaw } from '@/router/types'
+
 import SideBar from './sideBar.vue'
 
 const router = useRouter()
 
-const routerList = computed<RouteRecordRaw[]>(() => {
-  return router.options.routes as RouteRecordRaw[]
+const routerList: ComputedRef<AppRouteRecordRaw[]> = computed(() => {
+  return router.options.routes as unknown as AppRouteRecordRaw[]
 })
-
-console.log(routerList.value)
 
 const openKeys = ref<string[]>(['option', 'user'])
 
@@ -45,7 +45,7 @@ const title = ref<string | symbol>('')
 
 const collapsed = ref<boolean>(false)
 
-const menuItemClick = (item: RouteRecordRaw) => {
+const menuItemClick = (item: AppRouteRecordRaw) => {
   title.value = item.name ? item.name : ''
 }
 </script>

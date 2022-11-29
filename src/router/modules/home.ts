@@ -1,22 +1,25 @@
-import { RouteRecordRaw } from 'vue-router'
-export default <RouteRecordRaw[]>[
+import type { AppRouteRecordRaw } from '../types'
+const basicRoutes: AppRouteRecordRaw[] = [
   {
     path: '/',
-    name: '首页',
-    a: '',
+    name: 'home',
+    visible: false,
     component: () => import('@/views/index.vue'),
     meta: {
-      visible: true,
+      title: '首页',
       icon: 'AppleOutlined'
     }
   },
   {
     path: '/product',
-    name: '商品',
+    name: 'product',
+    visible: false,
     component: () => import('@/views/product.vue'),
     meta: {
-      visible: false,
+      title: '商品页',
       icon: 'WindowsOutlined'
     }
   }
 ]
+
+export default basicRoutes

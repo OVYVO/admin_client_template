@@ -15,7 +15,7 @@
               <template #icon>
                 <a-icon :type="item.meta?.icon"></a-icon>
               </template>
-              {{ item.name }}
+              {{ item.meta.title }}
             </a-menu-item>
           </router-link>
         </template>
@@ -29,10 +29,10 @@
 
 <script setup lang="ts">
 import SubMenu from './subMenu.vue'
-import { RouteRecordRaw } from 'vue-router'
+import type { AppRouteRecordRaw } from '@/router/types'
 
 interface Props {
-  menuList: Array<RouteRecordRaw>
+  menuList: Array<AppRouteRecordRaw>
   selectedKeys: string[]
   openKeys: string[]
   collapsed?: boolean
@@ -52,7 +52,7 @@ const updateOpenKeys = (...res: string[][]) => {
   emit('update:openKeys', ...res)
 }
 
-const menuItemClick = (item: RouteRecordRaw) => {
+const menuItemClick = (item: AppRouteRecordRaw) => {
   emit('menuItemClick', item)
 }
 </script>

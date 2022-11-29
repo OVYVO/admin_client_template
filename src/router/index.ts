@@ -1,24 +1,18 @@
-import { createRouter, createWebHistory, RouteRecordRaw, RouteMeta } from 'vue-router'
-import 'vue-router'
-declare module 'vue-router' {
-  interface RouteMeta {
-    visible: boolean
-    icon?: string
-  }
-}
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import type { AppRouteRecordRaw } from './types'
 
-const routes: RouteRecordRaw[] = []
+const routes: AppRouteRecordRaw[] = []
 
-const routerContext: any = import.meta.glob('./*.ts', { eager: true })
-Object.keys(routerContext).forEach((item: any) => {
-  Object.keys(routerContext[item]).forEach((it: any) => {
-    routes.push(...routerContext[item][it])
-  })
+const routerContext: any = import.meta.glob('./modules/**/*.ts', { eager: true })
+Object.keys(routerContext).forEach(item => {
+  const mod = routerContext[item].default || {}
+  const modList = Array.isArray(mod) ? [...mod] : [mod]
+  routes.push(...modList)
 })
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
+  routes: routes as unknown as RouteRecordRaw[]
 })
 
 // router.beforeEach((to, from, next) => {

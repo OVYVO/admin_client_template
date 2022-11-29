@@ -6,7 +6,7 @@
       <template v-if="!item.children">
         <router-link :to="item.path">
           <a-menu-item :key="item.path" @click="menuItemClick(item)">
-            {{ item.name }}
+            {{ item.meta.title }}
           </a-menu-item>
         </router-link>
       </template>
@@ -18,9 +18,9 @@
 </template>
 
 <script setup lang="ts" name="SubMenu">
-import { RouteRecordRaw } from 'vue-router'
+import type { AppRouteRecordRaw } from '@/router/types'
 
-defineProps<{ menuInfo: RouteRecordRaw }>()
+defineProps<{ menuInfo: AppRouteRecordRaw }>()
 
 const emit = defineEmits(['menuItemClick'])
 
