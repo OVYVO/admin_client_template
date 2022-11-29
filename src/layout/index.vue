@@ -6,7 +6,8 @@
         :collapsed="collapsed"
         v-model:openKeys="openKeys"
         v-model:selectedKeys="selectedKeys"
-        @menuItemClick="menuItemClick"></side-bar>
+        @menuItemClick="menuItemClick">
+      </side-bar>
       <a-layout>
         <a-layout-header>
           <a-icon
@@ -30,10 +31,11 @@ import SideBar from './sideBar.vue'
 
 const router = useRouter()
 
-const routerList: any = computed<RouteRecordRaw[]>(() => {
+const routerList = computed<RouteRecordRaw[]>(() => {
   return router.options.routes as RouteRecordRaw[]
 })
-console.log(routerList)
+
+console.log(routerList.value)
 
 const openKeys = ref<string[]>(['option', 'user'])
 

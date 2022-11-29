@@ -9,13 +9,15 @@
       :openKeys="openKeys"
       @update:openKeys="updateOpenKeys">
       <template v-for="item in menuList" :key="item.key">
-        <template v-if="item.children && !item.children.length">
-          <a-menu-item :key="item.path" @click="menuItemClick(item)">
-            <template #icon>
-              <a-icon :type="item.meta?.icon"></a-icon>
-            </template>
-            {{ item.name }}
-          </a-menu-item>
+        <template v-if="!item.children">
+          <router-link :to="item.path">
+            <a-menu-item :key="item.path" @click="menuItemClick(item)">
+              <template #icon>
+                <a-icon :type="item.meta?.icon"></a-icon>
+              </template>
+              {{ item.name }}
+            </a-menu-item>
+          </router-link>
         </template>
         <template v-else>
           <sub-menu :key="item.path" :menu-info="item" @menuItemClick="menuItemClick"></sub-menu>

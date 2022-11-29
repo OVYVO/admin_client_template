@@ -1,16 +1,22 @@
-export default [
+import { RouteRecordRaw } from 'vue-router'
+export default <RouteRecordRaw[]>[
   {
     path: '/',
     name: '首页',
-    // component: () => import('@/views/index.vue'),
+    a: '',
+    component: () => import('@/views/index.vue'),
     meta: {
+      visible: true,
       icon: 'AppleOutlined'
-    },
-    children: [
-      {
-        path: '/1',
-        name: '首页1'
-      }
-    ]
+    }
+  },
+  {
+    path: '/product',
+    name: '商品',
+    component: () => import('@/views/product.vue'),
+    meta: {
+      visible: false,
+      icon: 'WindowsOutlined'
+    }
   }
 ]

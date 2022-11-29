@@ -1,8 +1,8 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHistory, RouteRecordRaw, RouteMeta } from 'vue-router'
 import 'vue-router'
-
 declare module 'vue-router' {
   interface RouteMeta {
+    visible: boolean
     icon?: string
   }
 }
@@ -18,13 +18,13 @@ Object.keys(routerContext).forEach((item: any) => {
 
 const router = createRouter({
   history: createWebHistory(),
-  routes //readOnly
+  routes
 })
 
-router.beforeEach((to, from, next) => {
-  console.log('路由去向', to)
-  console.log('路由来源', from)
-  next()
-})
+// router.beforeEach((to, from, next) => {
+//   console.log('路由去向', to)
+//   console.log('路由来源', from)
+//   next()
+// })
 
 export default router
