@@ -9,13 +9,7 @@
         @menuItemClick="menuItemClick">
       </side-bar>
       <a-layout>
-        <a-layout-header>
-          <a-icon
-            :type="collapsed ? 'MenuUnfoldOutlined' : 'MenuFoldOutlined'"
-            class="trigger"
-            @click="() => (collapsed = !collapsed)">
-          </a-icon>
-        </a-layout-header>
+        <header-bar v-model:collapsed="collapsed"></header-bar>
         <a-layout-content>
           <slot></slot>
         </a-layout-content>
@@ -30,6 +24,7 @@ import { useRouter } from 'vue-router'
 import type { AppRouteRecordRaw } from '@/router/types'
 
 import SideBar from './sideBar.vue'
+import HeaderBar from './headerBar.vue'
 
 const router = useRouter()
 
@@ -57,13 +52,6 @@ const menuItemClick = (item: AppRouteRecordRaw) => {
   &:deep(.ant-layout) {
     width: 100%;
     height: 100%;
-    .ant-layout-header {
-      padding: 0 20px;
-      background: #fff;
-      .anticon {
-        font-size: 20px;
-      }
-    }
     .ant-layout-content {
       box-sizing: border-box;
       padding: 10px;

@@ -58,7 +58,7 @@ const basicRoutes: AppRouteRecordRaw[] = [
     component: () => import('@/views/product.vue'),
     meta: {
       title: '文章',
-      icon: 'WindowsOutlined'
+      icon: 'GithubOutlined'
     }
   }
 ]
