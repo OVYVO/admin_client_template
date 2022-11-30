@@ -1,7 +1,7 @@
 <template>
   <a-sub-menu :key="menuInfo.path">
     <template #icon><a-icon v-if="menuInfo.meta?.icon" :type="menuInfo.meta?.icon"></a-icon></template>
-    <template #title>{{ menuInfo.name }}</template>
+    <template #title>{{ menuInfo.meta.title }}</template>
     <template v-for="item in menuInfo.children" :key="item.key">
       <template v-if="!item.children">
         <router-link :to="item.path">

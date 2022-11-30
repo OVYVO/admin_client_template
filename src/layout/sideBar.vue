@@ -1,17 +1,18 @@
 <template>
-  <a-layout-sider :collapsed="collapsed">
+  <a-layout-sider width="256" :collapsed="collapsed">
     <div class="logo"></div>
     <a-menu
       :selectedKeys="selectedKeys"
       @update:selectedKeys="updateSelectedKeys"
-      theme="dark"
       mode="inline"
+      theme="dark"
+      width="256"
       :openKeys="openKeys"
       @update:openKeys="updateOpenKeys">
       <template v-for="item in menuList" :key="item.key">
         <template v-if="!item.children">
           <router-link :to="item.path">
-            <a-menu-item :key="item.path" @click="menuItemClick(item)">
+            <a-menu-item :key="item.name" class="a-menu-item-a" @click="menuItemClick(item)">
               <template #icon>
                 <a-icon :type="item.meta?.icon"></a-icon>
               </template>
@@ -20,7 +21,7 @@
           </router-link>
         </template>
         <template v-else>
-          <sub-menu :key="item.path" :menu-info="item" @menuItemClick="menuItemClick"></sub-menu>
+          <sub-menu :key="item.name" :menu-info="item" @menuItemClick="menuItemClick"></sub-menu>
         </template>
       </template>
     </a-menu>
@@ -57,12 +58,4 @@ const menuItemClick = (item: AppRouteRecordRaw) => {
 }
 </script>
 
-<style lang="less" scoped>
-.ant-layout-sider {
-  .logo {
-    height: 32px;
-    background: rgba(255, 255, 255, 0.3);
-    margin: 16px;
-  }
-}
-</style>
+<style lang="less" scoped></style>
