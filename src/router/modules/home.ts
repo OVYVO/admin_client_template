@@ -3,8 +3,8 @@ const basicRoutes: AppRouteRecordRaw[] = [
   {
     path: '/',
     name: 'home',
-    visible: false,
     component: () => import('@/views/index.vue'),
+    redirect: '/home1',
     meta: {
       title: '首页',
       icon: 'AppleOutlined'
@@ -13,27 +13,27 @@ const basicRoutes: AppRouteRecordRaw[] = [
       {
         path: '/home1',
         name: 'home1',
-        visible: false,
         component: () => import('@/views/index.vue'),
         meta: {
           title: '首页1'
-        }
-      },
-      {
-        path: '/home2',
-        name: 'home2',
-        visible: false,
-        component: () => import('@/views/index.vue'),
-        meta: {
-          title: '首页2'
-        }
+        },
+        children: [
+          {
+            path: '/home1/edit',
+            name: 'edit',
+            component: () => import('@/views/index.vue'),
+            meta: {
+              title: '首页1-1',
+              visible: false
+            }
+          }
+        ]
       }
     ]
   },
   {
     path: '/product',
     name: 'product',
-    visible: false,
     component: () => import('@/views/product.vue'),
     meta: {
       title: '商品页',
@@ -43,7 +43,6 @@ const basicRoutes: AppRouteRecordRaw[] = [
       {
         path: '/product1',
         name: 'product1',
-        visible: false,
         component: () => import('@/views/index.vue'),
         meta: {
           title: '商品页1'
@@ -54,11 +53,11 @@ const basicRoutes: AppRouteRecordRaw[] = [
   {
     path: '/article',
     name: 'article',
-    visible: false,
     component: () => import('@/views/product.vue'),
     meta: {
       title: '文章',
-      icon: 'GithubOutlined'
+      icon: 'GithubOutlined',
+      visible: false
     }
   }
 ]

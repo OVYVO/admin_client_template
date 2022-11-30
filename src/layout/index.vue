@@ -9,7 +9,7 @@
         @menuItemClick="menuItemClick">
       </side-bar>
       <a-layout>
-        <header-bar v-model:collapsed="collapsed"></header-bar>
+        <header-bar v-model:collapsed="collapsed" :routerTree="routerTree"></header-bar>
         <a-layout-content>
           <slot></slot>
         </a-layout-content>
@@ -18,27 +18,66 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { ComputedRef } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import type { AppRouteRecordRaw } from '@/router/types'
+import type { routerTreeType } from './types'
 
 import SideBar from './sideBar.vue'
 import HeaderBar from './headerBar.vue'
 
 const router = useRouter()
-
-const routerList: ComputedRef<AppRouteRecordRaw[]> = computed(() => {
-  return router.options.routes as unknown as AppRouteRecordRaw[]
-})
+const route = useRoute()
 
 const openKeys = ref<string[]>([])
-
-const selectedKeys = ref<string[]>([])
-
-const title = ref<string | symbol>('')
-
+const selectedKeys = ref<string[]>(['home1'])
 const collapsed = ref<boolean>(false)
+const title = ref<string | symbol>('')
+const routerTree = ref<routerTreeType[]>([])
+
+watch(
+  () => route.matched,
+  val => {
+    const handleRouterTree: Array<routerTreeType | any> = val.length
+      ? val.map(item => {
+          return {
+            key: item.path,
+            name: item.name,
+            title: item?.meta?.title,
+            visible: item.meta?.visible
+          }
+        })
+      : []
+    if (handleRouterTree.length) {
+      routerTree.value = handleRouterTree
+      openKeys.value = handleRouterTree.map(it => it.name)
+      //selectedKeys.value = [handleRouterTree[handleRouterTree.length - 1].name]
+    }
+  },
+  {
+    immediate: true,
+    deep: true
+  }
+)
+
+const routerList: ComputedRef<AppRouteRecordRaw[]> = computed(() => {
+  return filterRoute(router.options.routes as unknown as AppRouteRecordRaw[])
+})
+
+const filterRoute = (routes: AppRouteRecordRaw[]): AppRouteRecordRaw[] => {
+  routes.forEach((item: AppRouteRecordRaw, index: number) => {
+    if (!(item.meta?.visible ?? true)) {
+      routes.splice(index, 1)
+    }
+    if (item.children && item.children.length) {
+      filterRoute(item.children)
+    }
+  })
+  return routes
+}
+
+console.log(routerList.value)
 
 const menuItemClick = (item: AppRouteRecordRaw) => {
   title.value = item.name ? item.name : ''

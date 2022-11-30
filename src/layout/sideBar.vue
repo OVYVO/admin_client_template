@@ -3,16 +3,20 @@
     <div class="logo"></div>
     <a-menu
       :selectedKeys="selectedKeys"
-      @update:selectedKeys="updateSelectedKeys"
+      :openKeys="openKeys"
       mode="inline"
       theme="dark"
       width="256"
-      :openKeys="openKeys"
+      @update:selectedKeys="updateSelectedKeys"
       @update:openKeys="updateOpenKeys">
       <template v-for="item in menuList" :key="item.key">
         <template v-if="!item.children">
           <router-link :to="item.path">
-            <a-menu-item :key="item.name" class="a-menu-item-a" @click="menuItemClick(item)">
+            <a-menu-item
+              v-if="!item.meta.hasOwnProperty('visible') || item.meta.visible"
+              :key="item.name"
+              class="a-menu-item-a"
+              @click="menuItemClick(item)">
               <template #icon>
                 <a-icon :type="item.meta?.icon"></a-icon>
               </template>

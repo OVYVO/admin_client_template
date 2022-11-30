@@ -1,21 +1,35 @@
 <template>
   <a-layout-header>
-    <a-icon :type="collapsed ? 'MenuUnfoldOutlined' : 'MenuFoldOutlined'" class="trigger" @click="updateCollapsed()">
-    </a-icon>
+    <div class="header-left">
+      <a-icon :type="collapsed ? 'MenuUnfoldOutlined' : 'MenuFoldOutlined'" class="trigger" @click="updateCollapsed()">
+      </a-icon>
+      <a-breadcrumb>
+        <a-breadcrumb-item v-for="(item, index) in routerTree" :key="item.key">
+          <span v-if="index === routerTree.length - 1">
+            {{ item.title }}
+          </span>
+          <router-link v-else :to="item.key">
+            {{ item.title }}
+          </router-link>
+        </a-breadcrumb-item>
+      </a-breadcrumb>
+    </div>
   </a-layout-header>
 </template>
 
 <script setup lang="ts">
+import { routerTreeType } from './types'
+
 const props = withDefaults(
   defineProps<{
     collapsed: boolean
+    routerTree: routerTreeType[]
   }>(),
   {
     collapsed: false
   }
 )
-// 以下两种形式的类型标注都是可行的 前者为运行时声明 后者为类型声明
-// const emit = defineEmits(['update:collapsed'])
+
 const emit = defineEmits<{
   (e: 'update:collapsed', value: boolean): void
 }>()
@@ -29,6 +43,15 @@ const updateCollapsed = () => {
 .ant-layout-header {
   padding: 0 20px;
   background: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .header-left {
+    display: flex;
+    .ant-breadcrumb {
+      margin-left: 20px;
+    }
+  }
   .anticon {
     font-size: 20px;
   }
