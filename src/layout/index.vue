@@ -100,45 +100,6 @@ const menuItemClick = (item: AppRouteRecordRaw) => {
       background: #fff;
       background-clip: content-box;
     }
-
-    .ant-layout-sider {
-      .logo {
-        height: 32px;
-        background: rgba(255, 255, 255, 0.3);
-        margin: 16px;
-      }
-      .ant-menu {
-        a {
-          color: rgba(0, 0, 0, 0.85);
-        }
-        & > a {
-          .ant-menu-item {
-            display: flex;
-            white-space: initial;
-            .ant-menu-title-content {
-              flex: auto;
-              min-width: 0;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              transition: opacity 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), margin 0.3s, color 0.3s;
-            }
-          }
-        }
-      }
-      .ant-menu-inline-collapsed {
-        .a-menu-item-a {
-          padding: 0 calc(50% - 16px / 2);
-          .ant-menu-item-icon {
-            font-size: 16px;
-            position: relative;
-            line-height: 40px;
-          }
-          .ant-menu-title-content {
-            opacity: 0;
-          }
-        }
-      }
-    }
   }
 }
 </style>

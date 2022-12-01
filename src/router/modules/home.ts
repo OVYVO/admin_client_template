@@ -67,7 +67,7 @@ const basicRoutes: AppRouteRecordRaw[] = [
     meta: {
       title: '文章',
       icon: 'GithubOutlined',
-      visible: false
+      visible: true
     }
   }
 ]
