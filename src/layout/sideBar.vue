@@ -13,7 +13,7 @@
         <template v-if="!item.children">
           <router-link :to="item.path">
             <a-menu-item
-              v-if="!item.meta.hasOwnProperty('visible') || item.meta.visible"
+              v-if="item.meta?.visible ?? true"
               :key="item.name"
               class="a-menu-item-a"
               @click="menuItemClick(item)">
@@ -43,7 +43,7 @@ interface Props {
   collapsed?: boolean
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   collapsed: false
 })
 

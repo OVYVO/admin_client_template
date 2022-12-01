@@ -40,19 +40,21 @@ watch(
   () => route.matched,
   val => {
     const handleRouterTree: Array<routerTreeType | any> = val.length
-      ? val.map(item => {
-          return {
-            key: item.path,
-            name: item.name,
-            title: item?.meta?.title,
-            visible: item.meta?.visible
-          }
-        })
+      ? val
+          .map(item => {
+            return {
+              key: item.path,
+              name: item.name,
+              title: item?.meta?.title,
+              visible: item.meta?.visible ?? true
+            }
+          })
+          .filter(it => it.visible)
       : []
     if (handleRouterTree.length) {
       routerTree.value = handleRouterTree
       openKeys.value = handleRouterTree.map(it => it.name)
-      //selectedKeys.value = [handleRouterTree[handleRouterTree.length - 1].name]
+      selectedKeys.value = [handleRouterTree[handleRouterTree.length - 1].name]
     }
   },
   {
@@ -73,11 +75,12 @@ const filterRoute = (routes: AppRouteRecordRaw[]): AppRouteRecordRaw[] => {
     if (item.children && item.children.length) {
       filterRoute(item.children)
     }
+    if (!item?.children?.length) {
+      delete item['children']
+    }
   })
   return routes
 }
-
-console.log(routerList.value)
 
 const menuItemClick = (item: AppRouteRecordRaw) => {
   title.value = item.name ? item.name : ''

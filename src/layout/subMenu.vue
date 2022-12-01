@@ -5,10 +5,7 @@
     <template v-for="item in menuInfo.children" :key="item.key">
       <template v-if="!item.children">
         <router-link :to="item.path">
-          <a-menu-item
-            v-if="!item.meta.hasOwnProperty('visible') || item.meta.visible"
-            :key="item.name"
-            @click="menuItemClick(item)">
+          <a-menu-item v-if="item.meta?.visible ?? true" :key="item.name" @click="menuItemClick(item)">
             {{ item.meta.title }}
           </a-menu-item>
         </router-link>

@@ -23,9 +23,19 @@ const basicRoutes: AppRouteRecordRaw[] = [
             name: 'edit',
             component: () => import('@/views/index.vue'),
             meta: {
-              title: '首页1-1',
-              visible: false
-            }
+              title: '首页1-1'
+            },
+            children: [
+              {
+                path: '/home1/edit/1',
+                name: 'edit1',
+                component: () => import('@/views/index.vue'),
+                meta: {
+                  title: '首页1-1',
+                  visible: false
+                }
+              }
+            ]
           }
         ]
       }
