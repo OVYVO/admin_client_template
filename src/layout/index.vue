@@ -39,14 +39,14 @@ const routerTree = ref<routerTreeType[]>([])
 watch(
   () => route.matched,
   val => {
-    const handleRouterTree: Array<routerTreeType | any> = val.length
+    const handleRouterTree: Array<routerTreeType> = val.length
       ? val
           .map(item => {
             return {
               key: item.path,
-              name: item.name,
-              title: item?.meta?.title,
-              visible: item.meta?.visible ?? true
+              name: item.name as string,
+              title: item?.meta?.title as string,
+              visible: (item.meta?.visible ?? true) as boolean
             }
           })
           .filter(it => it.visible)

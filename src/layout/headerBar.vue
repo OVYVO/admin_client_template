@@ -14,6 +14,14 @@
         </a-breadcrumb-item>
       </a-breadcrumb>
     </div>
+    <div class="header-right">
+      <div class="avatar">
+        <a-avatar :size="40">
+          <template #icon><a-icon type="UserOutlined"></a-icon></template>
+        </a-avatar>
+        <span class="role-name">Ryan</span>
+      </div>
+    </div>
   </a-layout-header>
 </template>
 
@@ -51,9 +59,19 @@ const updateCollapsed = () => {
     .ant-breadcrumb {
       margin-left: 20px;
     }
+    .anticon {
+      font-size: 20px;
+    }
   }
-  .anticon {
-    font-size: 20px;
+  .header-right {
+    .avatar {
+      .role-name {
+        user-select: none;
+        font-size: 16px;
+        font-weight: 700;
+        margin-left: 6px;
+      }
+    }
   }
 }
 </style>
