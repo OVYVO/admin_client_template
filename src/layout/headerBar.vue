@@ -15,12 +15,26 @@
       </a-breadcrumb>
     </div>
     <div class="header-right">
-      <div class="avatar">
-        <a-avatar :size="40">
-          <template #icon><a-icon type="UserOutlined"></a-icon></template>
-        </a-avatar>
-        <span class="role-name">Ryan</span>
-      </div>
+      <a-dropdown>
+        <div class="avatar">
+          <a-avatar :size="30">
+            <template #icon><a-icon type="UserOutlined"></a-icon></template>
+          </a-avatar>
+          <span class="role-name">Ryan</span>
+        </div>
+        <template #overlay>
+          <a-menu>
+            <a-menu-item>
+              <a-icon type="HomeOutlined" style="margin-right: 6px"></a-icon>
+              <a href="javascript:;">个人中心</a>
+            </a-menu-item>
+            <a-menu-item>
+              <a-icon type="LogoutOutlined" style="margin-right: 6px"></a-icon>
+              <a href="javascript:;">退出登录</a>
+            </a-menu-item>
+          </a-menu>
+        </template>
+      </a-dropdown>
     </div>
   </a-layout-header>
 </template>
@@ -49,6 +63,8 @@ const updateCollapsed = () => {
 
 <style lang="less" scoped>
 .ant-layout-header {
+  height: 50px;
+  line-height: 50px;
   padding: 0 20px;
   background: #fff;
   display: flex;
@@ -65,9 +81,14 @@ const updateCollapsed = () => {
   }
   .header-right {
     .avatar {
+      box-sizing: border-box;
+      padding: 0 5px;
+      &:hover {
+        background: rgba(0, 0, 0, 0.1);
+      }
       .role-name {
         user-select: none;
-        font-size: 16px;
+        font-size: 14px;
         font-weight: 700;
         margin-left: 6px;
       }
