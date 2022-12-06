@@ -8,6 +8,7 @@ export interface ResponseType<T = any> {
 }
 
 export interface RequestConfig extends AxiosRequestConfig {
+  // url: NonNullable<AxiosRequestConfig['url']>
   args?: Record<string, any>
 }
 
