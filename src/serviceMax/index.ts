@@ -1,6 +1,7 @@
-import axios, { AxiosResponse } from 'axios'
-import type { AxiosInstance } from 'axios'
+import axios from 'axios'
+import type { AxiosInstance, AxiosResponse } from 'axios'
 import type { RequestType, RequestConfig, ResponseType } from './types'
+import { interceptorRequesthandler } from './interceptor'
 
 const instance: AxiosInstance = axios.create({
   baseURL: '',
@@ -10,41 +11,8 @@ const instance: AxiosInstance = axios.create({
   }
 })
 
-instance.interceptors.request.use(
-  (req: RequestConfig) => {
-    const { url, args } = req
-    if (args) {
-      const lostParams: string[] = []
-      // url! 表示强制排除undefined以及null的情况
-      const replacedUrl = url!.replace(/\{([^}]+)\}/g, (res, arg: string) => {
-        !args[arg] && lostParams.push(arg)
-        return args[arg] as string
-      })
-      if (lostParams.length) return Promise.reject(new Error('在args中找不到对应的路径参数'))
-      return { ...req, url: replacedUrl }
-    }
-    return req
-  },
-  (err: any) => {
-    return err
-  }
-)
-instance.interceptors.response
-  .use
-  // (res: AxiosResponse) => {
-  //   const { errCode, code } = res.data
-  //   if (errCode == 1) {
-  //     return Promise.reject(res)
-  //   } else if (errCode == 0 || code == 0) {
-  //     return res
-  //   } else {
-  //     return Promise.reject('请求失败')
-  //   }
-  // },
-  // (err: any) => {
-  //   return err
-  // }
-  ()
+instance.interceptors.request.use(interceptorRequesthandler.onFulfilled, interceptorRequesthandler.onRejected)
+instance.interceptors.response.use()
 
 const request: RequestType = <T>(config: RequestConfig) => {
   return async (requestConfig?: Partial<RequestConfig>) => {
