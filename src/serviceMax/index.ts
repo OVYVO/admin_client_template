@@ -3,7 +3,11 @@ import type { AxiosInstance } from 'axios'
 import type { RequestType, RequestConfig, ResponseType } from './types'
 
 const instance: AxiosInstance = axios.create({
-  baseURL: ''
+  baseURL: '',
+  // 添加默认默认header
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+  }
 })
 
 instance.interceptors.request.use(
@@ -13,14 +17,10 @@ instance.interceptors.request.use(
       const lostParams: string[] = []
       // url! 表示强制排除undefined以及null的情况
       const replacedUrl = url!.replace(/\{([^}]+)\}/g, (res, arg: string) => {
-        if (!args[arg]) {
-          lostParams.push(arg)
-        }
+        !args[arg] && lostParams.push(arg)
         return args[arg] as string
       })
-      if (lostParams.length) {
-        return Promise.reject(new Error('在args中找不到对应的路径参数'))
-      }
+      if (lostParams.length) return Promise.reject(new Error('在args中找不到对应的路径参数'))
       return { ...req, url: replacedUrl }
     }
     return req
@@ -29,14 +29,29 @@ instance.interceptors.request.use(
     return err
   }
 )
-instance.interceptors.response.use()
+instance.interceptors.response
+  .use
+  // (res: AxiosResponse) => {
+  //   const { errCode, code } = res.data
+  //   if (errCode == 1) {
+  //     return Promise.reject(res)
+  //   } else if (errCode == 0 || code == 0) {
+  //     return res
+  //   } else {
+  //     return Promise.reject('请求失败')
+  //   }
+  // },
+  // (err: any) => {
+  //   return err
+  // }
+  ()
 
 const request: RequestType = <T>(config: RequestConfig) => {
   return async (requestConfig?: Partial<RequestConfig>) => {
     const mergedConfig = {
       ...config,
       ...requestConfig,
-      Headers: {
+      headers: {
         ...config.headers,
         ...requestConfig?.headers
       }
@@ -52,3 +67,32 @@ const request: RequestType = <T>(config: RequestConfig) => {
 }
 
 export default request
+
+// use
+//import makeRequest from '../request';
+// export default {
+//   '/admins': makeRequest<{ admins: string[] }>({
+//     url: '/admins',
+//   }),
+//   '/delay': makeRequest({
+//     url: '/delay',
+//   }),
+//   '/500-error': makeRequest({
+//     url: '/500-error',
+//   }),
+//   '/account/{username}': makeRequest<
+//     { id: string; name: string; role: string },
+//     undefined,
+//     undefined,
+//     { username: string }
+//   >({
+//     url: '/account/{username}',
+//   }),
+// };
+
+// import apis from './api';
+// const getAdmins = async () => {
+//   const { err, data } = await apis['/admins']();
+//   if (err) return;
+//   setAdmins(data!.admins);
+// };

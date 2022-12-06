@@ -1,6 +1,7 @@
 import type { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
 
 export interface ResponseType<T = any> {
+  // 视项目情况改变
   data: null | T
   err: AxiosError | null
   reponse: AxiosResponse | null
