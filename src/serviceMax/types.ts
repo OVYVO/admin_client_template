@@ -7,9 +7,19 @@ export interface ResponseType<T = any> {
   reponse: AxiosResponse | null
 }
 
+export interface ResponseDataType<T = any> {
+  code: number
+  data: T
+  message: string
+}
+
 export interface RequestConfig extends AxiosRequestConfig {
   // url: NonNullable<AxiosRequestConfig['url']>
   args?: Record<string, any>
+
+  desc?: string
+  notifyWhenFailure?: boolean
+  notifyWhenSuccess?: boolean
 }
 
 export interface RequestType {

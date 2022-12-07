@@ -1,7 +1,7 @@
 import axios from 'axios'
 import type { AxiosInstance, AxiosResponse } from 'axios'
 import type { RequestType, RequestConfig, ResponseType } from './types'
-import { interceptorRequesthandler } from './interceptor'
+import { interceptorRequestHandler, interceptorResponsetHandler } from './interceptor'
 
 const instance: AxiosInstance = axios.create({
   baseURL: '',
@@ -11,8 +11,8 @@ const instance: AxiosInstance = axios.create({
   }
 })
 
-instance.interceptors.request.use(interceptorRequesthandler.onFulfilled, interceptorRequesthandler.onRejected)
-instance.interceptors.response.use()
+instance.interceptors.request.use(interceptorRequestHandler.onFulfilled, interceptorRequestHandler.onRejected)
+instance.interceptors.response.use(interceptorResponsetHandler.onFulfilled, interceptorResponsetHandler.onRejected)
 
 const request: RequestType = <T>(config: RequestConfig) => {
   return async (requestConfig?: Partial<RequestConfig>) => {
