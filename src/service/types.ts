@@ -6,3 +6,10 @@ export interface inheader extends RawAxiosRequestHeaders {
 export interface increateApiConfig extends AxiosRequestConfig {
   setHeader?: () => inheader
 }
+
+export interface inresponse<T> {
+  errCode: number
+  msg: string
+  action: any
+  data: T
+}

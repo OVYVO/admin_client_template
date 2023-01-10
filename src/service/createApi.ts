@@ -1,7 +1,7 @@
 import axios from 'axios'
 import qs from 'qs'
 import type { AxiosInstance, AxiosResponse } from 'axios'
-import { increateApiConfig, inheader } from './types'
+import { increateApiConfig, inheader, inresponse } from './types'
 import { showLoading, hiddenLoading } from '@/components/MyLoading'
 
 export const createApi = (config: increateApiConfig) => {
@@ -37,7 +37,7 @@ export const createApi = (config: increateApiConfig) => {
       return err
     }
   )
-  return async (options: increateApiConfig, { shouldLoading = false } = {}) => {
+  return async <T>(options: increateApiConfig, { shouldLoading = false } = {}) => {
     if (shouldLoading) {
       showLoading()
     }
@@ -45,7 +45,7 @@ export const createApi = (config: increateApiConfig) => {
       const response = await instance(options)
       hiddenLoading()
       const { data } = response
-      return data
+      return data as inresponse<T>
     } catch (e: any) {
       const { msg = '' } = e.data
       const errorMessage = `${options.url}接口报错:${msg}`

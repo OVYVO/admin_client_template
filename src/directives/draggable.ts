@@ -1,7 +1,7 @@
 /**
  * v-draggable
  * 移动元素
- * 接收参数：string类型/Ref<string>类型/Reactive<string>类型
+ * 需要优化
  */
 import type { Directive } from 'vue'
 const draggable: Directive = {
