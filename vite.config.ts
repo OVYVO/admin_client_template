@@ -22,12 +22,12 @@ export default defineConfig({
     })
   ],
   server: {
-    proxy: {
-      '/api': {
-        target: 'http://172.168.70.195:9789', //测试
-        changeOrigin: true
-      }
-    }
+    // proxy: {
+    //   '/api': {
+    //     target: 'http://172.168.70.195:9789', //测试
+    //     changeOrigin: true
+    //   }
+    // }
   },
   resolve: {
     alias: {

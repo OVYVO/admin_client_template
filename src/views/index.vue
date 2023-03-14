@@ -10,10 +10,16 @@ import axios from 'axios'
 import '../mock/index.ts'
 
 const visible = ref(true)
-onMounted(async () => {
+onMounted(() => {
   console.log('123')
-  const data = await axios.get(`/api/getUsers`)
-  console.log(data)
+  axios
+    .get(`/api/getUsers`)
+    .then(res => {
+      console.log(res)
+    })
+    .catch(err => {
+      console.log(err)
+    })
 })
 </script>
 
