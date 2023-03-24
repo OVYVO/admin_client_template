@@ -6,20 +6,13 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import axios from 'axios'
-import '../mock/index.ts'
+import { getUser } from '@/api/common'
 
 const visible = ref(true)
-onMounted(() => {
+onMounted(async () => {
   console.log('123')
-  axios
-    .get(`/api/getUsers`)
-    .then(res => {
-      console.log(res)
-    })
-    .catch(err => {
-      console.log(err)
-    })
+  const data = await getUser()
+  console.log(data)
 })
 </script>
 

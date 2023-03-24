@@ -1,6 +1,6 @@
 {
   "name": "ryan-admin",
-  "private": true,
+  "private": false,
   "version": "0.0.0",
   "scripts": {
     "dev": "cross-env NODE_ENV=development vite --host 0.0.0.0",

@@ -4,6 +4,8 @@ import router from './router'
 import { AIcon } from './utils/icon'
 import { setupStore } from './stores'
 
+import './mock/index.ts'
+
 const app = createApp(App)
 app.component('AIcon', AIcon)
 app.use(router)
