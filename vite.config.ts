@@ -14,21 +14,13 @@ export default defineConfig({
     vue(),
     viteMockServe({
       mockPath: './src/mock',
-      supportTs: true //如果使用 js发开，则需要配置 supportTs 为 false
+      supportTs: true
     }),
     Components({
       dirs: [],
       resolvers: [AntDesignVueResolver()]
     })
   ],
-  server: {
-    // proxy: {
-    //   '/api': {
-    //     target: 'http://172.168.70.195:9789', //测试
-    //     changeOrigin: true
-    //   }
-    // }
-  },
   resolve: {
     alias: {
       '@': path.join(__dirname, 'src')
@@ -44,7 +36,6 @@ export default defineConfig({
       }
     }
   },
-  // 生产环境去掉console.log及debug
   build: {
     minify: 'terser',
     terserOptions: {
