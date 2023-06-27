@@ -11,7 +11,9 @@
       <a-layout>
         <header-bar v-model:collapsed="collapsed" :routerTree="routerTree"></header-bar>
         <a-layout-content>
-          <slot></slot>
+          <Transition name="fade" mode="out-in">
+            <slot></slot>
+          </Transition>
         </a-layout-content>
       </a-layout>
     </a-layout>
@@ -97,8 +99,19 @@ const menuItemClick = (item: AppRouteRecordRaw) => {
     .ant-layout-content {
       box-sizing: border-box;
       padding: 10px;
-      background: #fff;
       background-clip: content-box;
+      .fade-leave-active,
+      .fade-enter-active {
+        transition: all 0.5s ease;
+      }
+      .fade-enter-from {
+        opacity: 0;
+        transform: translateX(-30px);
+      }
+      .fade-leave-to {
+        opacity: 0;
+        transform: translateX(30px);
+      }
     }
   }
 }

@@ -13,13 +13,10 @@ module.exports = {
   ],
   parser: 'vue-eslint-parser', // 使用vue解析器
   parserOptions: {
+    parser: '@typescript-eslint/parser',
     // 设置支持的JavaScript语言选项
     ecmaVersion: 'latest', // 指定EcmaScript的版本
-    sourceType: 'module', // script/module
-    parser: '@typescript-eslint/parser',
-    ecmaFeatures: {
-      jsx: true
-    }
+    sourceType: 'module' // script/module
   },
   plugins: [
     'vue', // eslint-plugin-vue缩写
