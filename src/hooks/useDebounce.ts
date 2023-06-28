@@ -14,12 +14,12 @@ import { ref, watch } from 'vue'
  *  run(3)
  *  delay 6s => console.log(3)
  */
-export interface useDebounceFnApi {
+export interface useDebounceFnInf {
   run: (...arg: any) => void
   cancel: () => void
 }
 
-export function useDebounceFn<T extends (...args: any) => any>(fn: T, wait = 1000): useDebounceFnApi {
+export function useDebounceFn<T extends (...args: any) => any>(fn: T, wait = 1000): useDebounceFnInf {
   const timer = ref<any>()
   const cancel = () => {
     timer.value && clearTimeout(timer.value)
@@ -53,13 +53,13 @@ export function useDebounceFn<T extends (...args: any) => any>(fn: T, wait = 100
  *  delay 1s => console.log(watchval) //3
  */
 
-export interface useDebounceStateApi<T> {
+export interface useDebounceStateInf<T> {
   state: Ref<T>
   watchStop: WatchStopHandle
   cancel: () => void
 }
 
-export function useDebounceDate<T>(watchFn: (() => T) | Ref<T> | ComputedRef<T>, wait = 1000): useDebounceStateApi<T> {
+export function useDebounceDate<T>(watchFn: (() => T) | Ref<T> | ComputedRef<T>, wait = 1000): useDebounceStateInf<T> {
   const state = typeof watchFn === 'function' ? (ref(watchFn()) as Ref<T>) : (ref(watchFn['value']) as Ref<T>)
   const { run: setState, cancel } = useDebounceFn((d: T) => (state.value = d), wait - 10)
   const watchStop = watch(watchFn, newVal => {

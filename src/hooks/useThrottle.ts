@@ -15,7 +15,7 @@ import type { Ref, WatchStopHandle, ComputedRef } from 'vue'
  *  ....
  *  delay 5 => console.log(1)
  */
-export interface useThrottleFnApi {
+export interface useThrottleFnInf {
   run: (...args: any) => void
   cancel: () => void
 }
@@ -58,14 +58,14 @@ export function useThrottleFn<T extends (...args: any) => void>(fn: T, wait = 10
  * => 1
  */
 
-export interface useThrottleStateApi<T> {
+export interface useThrottleStateInf<T> {
   state: Ref<T>
   setState: (...args: any) => void
   watchStop: WatchStopHandle
   cancel: () => void
 }
 
-export function useThrottleDate<T>(watchFn: (() => T) | Ref<T> | ComputedRef<T>, wait = 1000): useThrottleStateApi<T> {
+export function useThrottleDate<T>(watchFn: (() => T) | Ref<T> | ComputedRef<T>, wait = 1000): useThrottleStateInf<T> {
   const state = typeof watchFn === 'function' ? (ref(watchFn()) as Ref<T>) : (ref(watchFn['value']) as Ref<T>)
   const { run: setState, cancel } = useThrottleFn((data: T) => {
     state.value = data
